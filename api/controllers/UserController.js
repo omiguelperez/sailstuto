@@ -8,14 +8,33 @@
 module.exports = {
 
 	/**
+	 * Mostrar el listado de usuarios.
+	 *
+	 * @param  {object}   req  HttpRequest
+	 * @param  {object}   res  HttpResponse
+	 * @param  {Function} next Callback
+	 */
+
+	index: function (req, res, next) {
+		User.find(function (err, users) {
+			if (err) {
+				return res.serverError(err);
+			}
+
+			res.view({
+				users: users
+			});
+		});
+	},
+	/**
 	 * Formulario parar crear un nuevo usuario
 	 *
 	 * @param  {object} req HttpRequest
 	 * @param  {object} res HttpResponse
 	 */
 
-	new: function (req, res) {
-		return res.view('user/new');
+	new: function (req, res, next) {
+		return res.view();
 	},
 
 	/**
@@ -25,7 +44,7 @@ module.exports = {
 	 * @param  {object} res HttpResponse
 	 */
 
-	create: function (req, res) {
+	create: function (req, res, next) {
 		let newUserInfo = {
 			name: req.param('name'),
 			lastname: req.param('lastname'),
@@ -60,7 +79,7 @@ module.exports = {
 				return res.notFound(`Usuario con 'id' = ${req.param('id')} no se encontró.`);
 			}
 
-			return res.view('user/show', {
+			return res.view({
 				user: user
 			});
 		});
@@ -84,7 +103,7 @@ module.exports = {
 				return res.notFound(`Usuario con 'id' = ${req.param('id')} no se encontró.`);
 			}
 
-			return res.view('user/edit', {
+			return res.view({
 				user: user
 			});
 		});
@@ -112,6 +131,24 @@ module.exports = {
 			}
 
 			res.redirect(`/user/show/${req.param('id')}`);
+		});
+	},
+
+	/**
+	 * Eliminar un usuario
+	 *
+	 * @param  {object}   req  HttpRequest
+	 * @param  {object}   res  HttpResponse
+	 * @param  {Function} next Callback
+	 */
+
+	destroy: function (req, res, next) {
+		User.destroy(req.param('id'), function (err) {
+			if (err) {
+				return res.serverError(err);
+			}
+
+			res.redirect('/user');
 		});
 	}
 

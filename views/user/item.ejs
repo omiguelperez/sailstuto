@@ -1,0 +1,10 @@
+<tr>
+  <td> <%= user.name %> </td>
+  <td> <%= user.lastname %> </td>
+  <td> <%= user.username %> </td>
+  <td> <%= user.email %> </td>
+  <td>
+    <a href="/user/edit/<%= user.id %>" class="btn btn-warning">Editar</a>
+    <a href="/user/destroy/<%= user.id %>" class="btn btn-danger">Borrar</a>
+  </td>
+</tr>
