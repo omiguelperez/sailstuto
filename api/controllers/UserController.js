@@ -44,13 +44,14 @@ module.exports = {
 
 		User.create(newUserInfo, function (err, user) {
 			if (err) {
+				if (err.name === 'passwordDoesNotMatchError') {
+					return res.badRequest(err);
+				}
 				return res.serverError(err);
 			}
 
-			// esta clave no puede ser visible al cliente
 			delete user.encryptedPassword;
-
-			return res.redirect('/user');
+			res.redirect('/user');
 		});
 	},
 

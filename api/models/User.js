@@ -69,6 +69,18 @@ module.exports = {
    * y se agrega la clave que está cifrada para guardarla en la base de datos.
    */
   beforeCreate: function (values, next) {
+    let password = values.password;
+    let passwordConfirmation = values.passwordConfirmation;
+
+    // error por las contraseñas
+    if (!password || !passwordConfirmation || password != passwordConfirmation) {
+      let passwordDoesNotMatchError = {
+        name: 'passwordDoesNotMatchError',
+        message: 'Las contraseñas no coinciden.'
+      };
+      return next(passwordDoesNotMatchError);
+    }
+
     bcrypt.hash(values.password, 10, function (err, encryptedPassword) {
       if (err) {
         return next(err);
