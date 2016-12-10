@@ -33,9 +33,9 @@ module.exports.routes = {
   ***************************************************************************/
 
   '/': {
-    view: 'homepage'
+    view: 'templates/index'
   },
-  
+
   '/profile': {
     view: 'profile'
   }
