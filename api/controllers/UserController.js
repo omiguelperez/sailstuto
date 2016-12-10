@@ -49,7 +49,9 @@ module.exports = {
 			name: req.param('name'),
 			lastname: req.param('lastname'),
 			username: req.param('username'),
-			email: req.param('email')
+			email: req.param('email'),
+			password: req.param('password'),
+			passwordConfirmation: req.param('passwordConfirmation'),
 		};
 
 		User.create(newUserInfo, function (err, user) {
