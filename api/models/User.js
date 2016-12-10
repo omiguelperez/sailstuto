@@ -49,6 +49,10 @@ module.exports = {
       type: 'string'
     },
 
+    /**
+     * Parsear los datos de un usuario a formato JSON y eliminar las claves
+     * que no están cifradas de este objeto.
+     */
     toJSON: function () {
       let user = this.toObject();
 
@@ -60,12 +64,19 @@ module.exports = {
 
   },
 
+  /**
+   * Antes de guardar el usuario se quitan las claves que no están cifradas
+   * y se agrega la clave que está cifrada para guardarla en la base de datos.
+   */
   beforeCreate: function (values, next) {
     bcrypt.hash(values.password, 10, function (err, encryptedPassword) {
       if (err) {
         return next(err);
       }
 
+      // las claves planas no se guardan, pero cifrada sí
+      delete values.password;
+      delete values.passwordConfirmation;
       values.encryptedPassword = encryptedPassword;
 
       next();

@@ -8,13 +8,8 @@
 module.exports = {
 
 	/**
-	 * Mostrar el listado de usuarios.
-	 *
-	 * @param  {object}   req  HttpRequest
-	 * @param  {object}   res  HttpResponse
-	 * @param  {Function} next Callback
+	 * Mostrar todos los usuario en el 'index' de los usuarios.
 	 */
-
 	index: function (req, res, next) {
 		User.find(function (err, users) {
 			if (err) {
@@ -26,24 +21,17 @@ module.exports = {
 			});
 		});
 	},
+
 	/**
 	 * Formulario parar crear un nuevo usuario
-	 *
-	 * @param  {object} req HttpRequest
-	 * @param  {object} res HttpResponse
 	 */
-
 	new: function (req, res, next) {
 		return res.view();
 	},
 
 	/**
-	 * Metodo para crear un nuevo usuario
-	 *
-	 * @param  {object} req HttpRequest
-	 * @param  {object} res HttpResponse
+	 * Crear un usuario, guardar los datos que vienen desde un formulario
 	 */
-
 	create: function (req, res, next) {
 		let newUserInfo = {
 			name: req.param('name'),
@@ -59,18 +47,16 @@ module.exports = {
 				return res.serverError(err);
 			}
 
+			// esta clave no puede ser visible al cliente
+			delete user.encryptedPassword;
+
 			return res.redirect('/user');
 		});
 	},
 
 	/**
 	 * Mostrar información de un usuario
-	 *
-	 * @param  {object}   req  HttpRequest
-	 * @param  {object}   res  HttpResponse
-	 * @param  {Function} next Callback
 	 */
-
 	show: function (req, res, next) {
 		User.findOne(req.param('id'), function (err, user) {
 			if (err) {
@@ -89,12 +75,7 @@ module.exports = {
 
 	/**
 	 * Mostrar la información del usuario lista para modificar.
-	 *
-	 * @param  {object}   req  HttpRequest
-	 * @param  {object}   res  HttpResponse
-	 * @param  {Function} next Callback
 	 */
-
 	edit: function (req, res, next) {
 		User.findOne(req.param('id'), function (err, user) {
 			if (err) {
@@ -113,12 +94,7 @@ module.exports = {
 
 	/**
 	 * Modificar la información de un usuario
-	 *
-	 * @param  {object}   req  HttpRequest
-	 * @param  {object}   res  HttpResponse
-	 * @param  {Function} next Callback
 	 */
-
 	update: function (req, res, next) {
 		let newUserInfo = {
 			name: req.param('name'),
@@ -138,12 +114,7 @@ module.exports = {
 
 	/**
 	 * Eliminar un usuario
-	 *
-	 * @param  {object}   req  HttpRequest
-	 * @param  {object}   res  HttpResponse
-	 * @param  {Function} next Callback
 	 */
-
 	destroy: function (req, res, next) {
 		User.destroy(req.param('id'), function (err) {
 			if (err) {
