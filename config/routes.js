@@ -36,10 +36,6 @@ module.exports.routes = {
     view: 'templates/index'
   },
 
-  '/user/new': {
-    controller: 'UserController', action: 'new'
-  }
-
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *

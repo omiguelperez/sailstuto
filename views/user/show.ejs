@@ -1,0 +1,8 @@
+<div class="container">
+  <p> <strong>Name: </strong> <span><%= user.name %></span> </p>
+  <p> <strong>Lastname: </strong> <span><%= user.lastname %></span> </p>
+
+  <form class="form-signin" action="/user/edit/<%= user.id %>" method="post">
+    <button class="btn btn-primary" type="submit">Editar</button>
+  </form>
+</div>

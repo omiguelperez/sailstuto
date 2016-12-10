@@ -15,7 +15,7 @@ module.exports = {
       defaultsTo: 'Elliot'
     },
 
-    lastName: {
+    lastname: {
       type: 'string',
       required: true,
       defaultsTo: 'Alderson'
