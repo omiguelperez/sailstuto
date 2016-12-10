@@ -36,8 +36,8 @@ module.exports.routes = {
     view: 'templates/index'
   },
 
-  '/profile': {
-    view: 'profile'
+  '/user/new': {
+    controller: 'UserController', action: 'new'
   }
 
   /***************************************************************************
