@@ -51,7 +51,11 @@ module.exports = {
 			}
 
 			delete user.encryptedPassword;
-			res.redirect('/user');
+
+			req.session.authenticated = true;
+			req.session.user = user;
+
+			return res.redirect('/user');
 		});
 	},
 

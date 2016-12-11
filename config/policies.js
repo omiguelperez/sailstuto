@@ -26,7 +26,18 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
 
-  // '*': true,
+  '*': 'authenticationRequired',
+
+  'UserController': {
+    'new': 'isAuthenticated',
+    'create': 'isAuthenticated',
+    '*': 'authenticationRequired'
+  },
+
+  'SessionController': {
+    'destroy': 'authenticationRequired',
+    '*': 'isAuthenticated'
+  }
 
   /***************************************************************************
   *                                                                          *
